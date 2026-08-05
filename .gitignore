@@ -1,0 +1,15 @@
+# 依赖与构建产物
+node_modules/
+site/node_modules/
+site/dist/
+dist/
+
+# 官方手册参考克隆（87M，仅本地查阅，不参与构建与部署）
+docs/
+
+# 本地工具目录
+.pi/
+
+# 系统文件
+.DS_Store
+Thumbs.db

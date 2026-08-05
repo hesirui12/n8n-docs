@@ -1,0 +1,15 @@
+{
+  "name": "n8n-tutorial-site",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "轻量级 Bun 静态站点生成器 —— n8n 入门教程（ark-ui · endfield 风格手册）",
+  "scripts": {
+    "build": "bun run build.ts",
+    "serve": "bun run serve.ts",
+    "dev": "bun run build.ts && bun run serve.ts"
+  },
+  "dependencies": {
+    "marked": "^12.0.0"
+  }
+}
