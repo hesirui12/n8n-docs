@@ -129,7 +129,9 @@ function rewriteLinks(html: string): string {
     const ext = (path.match(/\.\w+$/) || [''])[0].toLowerCase();
     if (attr === 'href' && ext === '.md') {
       const p = path.startsWith('./') ? path.slice(2) : path;
-      return `href="${p.slice(0, -3)}.html${hash ? '#' + hash : ''}"`;
+      // README.md 渲染为其所在目录的 index.html
+      const target = p.endsWith('README.md') ? p.replace(/README\.md$/, 'index.html') : p.slice(0, -3) + '.html';
+      return `href="${target}${hash ? '#' + hash : ''}"`;
     }
     return m;
   });
@@ -178,20 +180,20 @@ function renderPage(md: string, usedIds: Set<string>) {
 
 function navTarget(sec: string, file: string): string {
   const f = file.endsWith('.md') ? file : `${file}.md`;
-  if (f.endsWith('README.md')) return `${sec}/index.html`;
+  if (f.endsWith('README.md')) return `${sec}/${f.replace(/README\.md$/, 'index.html')}`;
   return `${sec}/${f.slice(0, -3)}.html`;
 }
 
-function renderNavTree(nodes: NavNode[], sec: string, currentRel: string): string {
+function renderNavTree(nodes: NavNode[], sec: string, currentRel: string, relPrefix: string): string {
   const out: string[] = [];
   for (const n of nodes) {
     if (n.children.length) {
-      const kids = renderNavTree(n.children, sec, currentRel);
+      const kids = renderNavTree(n.children, sec, currentRel, relPrefix);
       out.push(`<details class="ob-tree-group"><summary>${n.title}</summary>${kids}</details>`);
     } else {
       const target = navTarget(sec, n.file);
       const cls = n.file === currentRel ? ' class="ob-tree-link active"' : ' class="ob-tree-link"';
-      out.push(`<a${cls} href=".${target}">${n.title}</a>`);
+      out.push(`<a${cls} href="${relPrefix}${target}">${n.title}</a>`);
     }
   }
   return out.join('\n');
@@ -307,12 +309,12 @@ async function build() {
   }
 
   // 4. 侧边栏全树 + 板块导航（相对 official 根，页面内用 relPrefix 前缀）
-  const sectionNavHtml = (cur: string) => SECTIONS.map((s) =>
-    `<a href="${s.dir}/index.html"${s.dir === cur ? ' class="active"' : ''}>${s.zh}</a>`).join('\n');
+  const sectionNavHtml = (cur: string, relPrefix: string) => SECTIONS.map((s) =>
+    `<a href="${relPrefix}${s.dir}/index.html"${s.dir === cur ? ' class="active"' : ''}>${s.zh}</a>`).join('\n');
   const sidebarAllHtml = SECTIONS.map((s) => {
     const nodes = navBySection[s.dir];
     if (!nodes.length) return '';
-    return `<details class="ob-tree-section" data-section="${s.dir}"${s.dir === 'get-started' ? ' open' : ''}><summary>${s.zh} <em>${s.en}</em></summary>${renderNavTree(nodes, s.dir, '')}</details>`;
+    return `<details class="ob-tree-section" data-section="${s.dir}"${s.dir === 'get-started' ? ' open' : ''}><summary>${s.zh} <em>${s.en}</em></summary>${renderNavTree(nodes, s.dir, '', '')}</details>`;
   }).join('\n');
 
   // 5. 渲染所有页面（先全部渲染到内存，索引全量生成后统一回填）
@@ -335,8 +337,10 @@ async function build() {
       const h1 = (html.match(/<h1[^>]*>(.*?)<\/h1>/s)?.[1] ?? '').replace(/<[^>]+>/g, '').trim();
       const title = h1 || fmTitle || rel.split('/').pop()!.replace('.md', '');
 
-      // 输出路径（rel 已含板块目录；README → 板块 index.html）
-      const outFile = rel.endsWith('README.md') ? `${sec.dir}/index.html` : rel.slice(0, -3) + '.html';
+      // 输出路径（README.md → 其所在目录的 index.html；其余 → 同名 .html）
+      const outFile = rel.endsWith('README.md')
+        ? rel.replace(/README\.md$/, 'index.html')
+        : rel.slice(0, -3) + '.html';
       const relPrefix = '../'.repeat(outFile.split('/').length - 1); // 到 official 根的相对前缀
 
       const u = outFile;
@@ -346,7 +350,7 @@ async function build() {
         ? headings.map((x) => `<a class="ob-toc-${x.depth === 2 ? 'h2' : 'h3'}" href="#${x.id}">${x.text}</a>`).join('\n')
         : '<span class="ob-toc-empty">（无子章节）</span>';
 
-      const sidebar = renderNavTree(navBySection[sec.dir], sec.dir, rel.slice(sec.dir.length + 1));
+      const sidebar = renderNavTree(navBySection[sec.dir], sec.dir, rel.slice(sec.dir.length + 1), relPrefix);
       const langBadge = isZh
         ? `<div class="ob-lang-badge"><span>🌐 本页已本地化（小白中文版）</span><a href="${relPrefix}${u.replace(/\.html$/, '-en.html')}">English 原文</a></div>`
         : '<div class="ob-lang-badge en"><span>📄 English Original · 官方英文原文</span></div>';
@@ -358,7 +362,7 @@ async function build() {
           body: html,
           sidebar,
           toc,
-          sectionNav: sectionNavHtml(sec.dir),
+          sectionNav: sectionNavHtml(sec.dir, relPrefix),
           langBadge,
           relPrefix,
           searchIndexJson: 'null',
@@ -383,7 +387,7 @@ async function build() {
             body: enHtml,
             sidebar,
             toc: enToc,
-            sectionNav: sectionNavHtml(sec.dir),
+            sectionNav: sectionNavHtml(sec.dir, relPrefix),
             langBadge: `<div class="ob-lang-badge"><span>English Original</span><a href="${relPrefix}${u}">← 中文版</a></div>`,
             relPrefix,
             searchIndexJson: 'null',
@@ -415,7 +419,7 @@ async function build() {
   }
 
   // 7. official 根 index.html → 文档首页（搜索 + 板块导航）
-  const homeHtml = renderHomepage(sectionNavHtml(''), total, navBySection)
+  const homeHtml = renderHomepage(sectionNavHtml('', ''), total, navBySection)
     .replace('var SEARCH_INDEX = null;', `var SEARCH_INDEX = ${JSON.stringify(searchIndex)};`);
   await writeFile(join(DIST, 'index.html'), homeHtml);
 
