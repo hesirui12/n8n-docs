@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="zh-CN" data-ark-theme="endfield" data-ark-depth="moderate">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · 数据与表达式 · n8n 入门教程</title>
+<meta name="description" content="n8n 零基础入门教程（中英对照 · 本土版）—— 认识概念、安装、第一个工作流、核心概念、进阶与排查。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='4' fill='%23ea4b71'/%3E%3Ctext x='50' y='68' font-size='42' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3En8n%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-logo">n8n</span>
+      <span class="brand-stack">
+        <span class="brand-title">入门教程</span>
+        <span class="brand-meta">Beginner Tutorial · 中英对照</span>
+      </span>
+    </a>
+    <nav class="header-links" aria-label="站外链接">
+      <a href="https://docs.n8n.io/" target="_blank" rel="noopener">官方文档</a>
+      <a href="https://github.com/n8n-io/n8n-docs" target="_blank" rel="noopener">官方手册仓库</a>
+      <a class="switch-official" href="official/">官方文档（旧版）</a>
+      <span class="ver-chip">Ver 1.0.0</span>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-search">
+      <input id="search-input" type="search" placeholder="搜索手册…  /" autocomplete="off" aria-label="搜索手册">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <div class="nav-scroll">
+      <nav class="nav" id="nav" aria-label="手册目录"><div class="nav-group"><div class="nav-group-label">开始</div><a class="nav-item" href="index.html" data-key="首页 Overview"><span class="nav-index">00</span><span><span class="nav-label">首页</span><span class="nav-en">Overview</span></span></a><a class="nav-item" href="01-认识n8n.html" data-key="01 · 认识 n8n Concepts & Glossary"><span class="nav-index">01</span><span><span class="nav-label">01 · 认识 n8n</span><span class="nav-en">Concepts & Glossary</span></span></a><a class="nav-item" href="02-选择使用方式与安装.html" data-key="02 · 选择与安装 Choose & Install"><span class="nav-index">02</span><span><span class="nav-label">02 · 选择与安装</span><span class="nav-en">Choose & Install</span></span></a><a class="nav-item" href="03-创建第一个工作流.html" data-key="03 · 第一个工作流 Build Your First Workflow"><span class="nav-index">03</span><span><span class="nav-label">03 · 第一个工作流</span><span class="nav-en">Build Your First Workflow</span></span></a></div>
+<div class="nav-group"><div class="nav-group-label">核心</div><a class="nav-item active" href="04-数据与表达式.html" data-key="04 · 数据与表达式 Data & Expressions"><span class="nav-index">04</span><span><span class="nav-label">04 · 数据与表达式</span><span class="nav-en">Data & Expressions</span></span></a><a class="nav-item" href="05-编辑器界面与操作技巧.html" data-key="05 · 编辑器与操作 Editor & Shortcuts"><span class="nav-index">05</span><span><span class="nav-label">05 · 编辑器与操作</span><span class="nav-en">Editor & Shortcuts</span></span></a><a class="nav-item" href="06-保存发布与版本管理.html" data-key="06 · 保存与发布 Save & Publish"><span class="nav-index">06</span><span><span class="nav-label">06 · 保存与发布</span><span class="nav-en">Save & Publish</span></span></a><a class="nav-item" href="07-执行与调试.html" data-key="07 · 执行与调试 Executions & Debug"><span class="nav-index">07</span><span><span class="nav-label">07 · 执行与调试</span><span class="nav-en">Executions & Debug</span></span></a><a class="nav-item" href="08-流程逻辑进阶.html" data-key="08 · 流程逻辑进阶 Flow Logic Deep Dive"><span class="nav-index">08</span><span><span class="nav-label">08 · 流程逻辑进阶</span><span class="nav-en">Flow Logic Deep Dive</span></span></a></div>
+<div class="nav-group"><div class="nav-group-label">数据与代码</div><a class="nav-item" href="09-凭证管理.html" data-key="09 · 凭证管理 Credentials"><span class="nav-index">09</span><span><span class="nav-label">09 · 凭证管理</span><span class="nav-en">Credentials</span></span></a><a class="nav-item" href="10-数据转换与常用节点.html" data-key="10 · 数据转换与节点 Transform & Data Nodes"><span class="nav-index">10</span><span><span class="nav-label">10 · 数据转换与节点</span><span class="nav-en">Transform & Data Nodes</span></span></a><a class="nav-item" href="11-Code节点与内置方法.html" data-key="11 · Code 节点 Code Node & Methods"><span class="nav-index">11</span><span><span class="nav-label">11 · Code 节点</span><span class="nav-en">Code Node & Methods</span></span></a></div>
+<div class="nav-group"><div class="nav-group-label">AI 进阶</div><a class="nav-item" href="12-AI工作流入门.html" data-key="12 · AI 工作流入门 AI Workflows Intro"><span class="nav-index">12</span><span><span class="nav-label">12 · AI 工作流入门</span><span class="nav-en">AI Workflows Intro</span></span></a><a class="nav-item" href="13-AI辅助构建与模板.html" data-key="13 · AI 构建与模板 AI Builders & Templates"><span class="nav-index">13</span><span><span class="nav-label">13 · AI 构建与模板</span><span class="nav-en">AI Builders & Templates</span></span></a></div>
+<div class="nav-group"><div class="nav-group-label">运维与扩展</div><a class="nav-item" href="14-管理工作流与团队协作.html" data-key="14 · 管理与协作 Manage & Collaborate"><span class="nav-index">14</span><span><span class="nav-label">14 · 管理与协作</span><span class="nav-en">Manage & Collaborate</span></span></a><a class="nav-item" href="15-部署升级与运维.html" data-key="15 · 部署与运维 Deploy & Operate"><span class="nav-index">15</span><span><span class="nav-label">15 · 部署与运维</span><span class="nav-en">Deploy & Operate</span></span></a><a class="nav-item" href="16-API-CLI与MCP.html" data-key="16 · API / CLI / MCP API · CLI · MCP"><span class="nav-index">16</span><span><span class="nav-label">16 · API / CLI / MCP</span><span class="nav-en">API · CLI · MCP</span></span></a></div>
+<div class="nav-group"><div class="nav-group-label">附录</div><a class="nav-item" href="17-常见问题与学习路线.html" data-key="17 · 排查与学习路线 Troubleshooting & Paths"><span class="nav-index">17</span><span><span class="nav-label">17 · 排查与学习路线</span><span class="nav-en">Troubleshooting & Paths</span></span></a></div></nav>
+    </div>
+    <div class="sidebar-footer">
+      <span class="sf-code">Field / Reference</span>
+      <p>基于 <a href="https://github.com/n8n-io/n8n-docs" target="_blank" rel="noopener">n8n 官方手册</a>（fair-code）中英对照整理，仅供学习交流</p>
+    </div>
+  </aside>
+
+  <main class="content">
+    <button class="menu-toggle" id="menu-toggle" aria-label="展开目录"><span class="mt-bar">≡</span>目录</button>
+    <div class="chapter-strip"><span class="cs-code">CH-04 / 核心</span><span class="cs-group">Data & Expressions · 核心</span></div>
+    <article class="markdown-body"><h1 id="04-数据与表达式"><a class="anchor" href="#04-数据与表达式" aria-hidden="true"></a>04 · 数据与表达式</h1><blockquote>
+<p><strong>Data Structure &amp; Expressions</strong></p>
+<p>官方出处：<code>docs/build/work-with-data/understand-n8ns-data-structure.md</code>、<code>transform-data/expressions-for-data-transformation.md</code>、<code>data-tables.md</code>、<code>pin-and-mock-data.md</code>、<code>filter-out-unwanted-data.md</code></p>
+</blockquote>
+<hr>
+<h2 id="本节目标-what-you-ll-learn"><a class="anchor" href="#本节目标-what-you-ll-learn" aria-hidden="true"></a>本节目标 / What You&#39;ll Learn</h2><ul>
+<li>n8n 里数据长什么样（JSON 结构）——理解数据是理解一切的关键</li>
+<li>数据如何从一个节点流到下一个节点</li>
+<li>表达式（Expression）是什么、怎么写、怎么用拖拽偷懒</li>
+<li><strong>数据固定（Pin Data）</strong> 与 <strong>数据模拟（Mock Data）</strong>：开发期的两大法宝</li>
+<li>数据表（Data Tables）、筛选（Filter）、特殊数据类型速览</li>
+</ul>
+<hr>
+<h2 id="1-n8n-的数据结构-how-n8n-structures-data"><a class="anchor" href="#1-n8n-的数据结构-how-n8n-structures-data" aria-hidden="true"></a>1. n8n 的数据结构 / How n8n Structures Data</h2><blockquote>
+<p><strong>官方原文</strong>：In n8n, all data passed between nodes is an array of objects.
+<strong>翻译</strong>：在 n8n 中，节点之间传递的所有数据都是「对象的数组」。</p>
+</blockquote>
+<p>听起来很吓人？其实很简单。<strong>JSON</strong> 是一种通用的文本数据格式，长这样：</p>
+<pre><code class="language-json">[
+  {
+    &quot;姓名&quot;: &quot;小明&quot;,
+    &quot;年龄&quot;: 18,
+    &quot;城市&quot;: &quot;上海&quot;
+  },
+  {
+    &quot;姓名&quot;: &quot;小红&quot;,
+    &quot;年龄&quot;: 20,
+    &quot;城市&quot;: &quot;北京&quot;
+  }
+]
+</code></pre>
+<ul>
+<li><code>[ ]</code> 表示<strong>数组</strong>（一组数据，可以有很多条）</li>
+<li><code>{ }</code> 表示<strong>对象</strong>（一条数据，包含若干「键值对」）</li>
+<li><code>&quot;姓名&quot;: &quot;小明&quot;</code> 就是一条<strong>键值对</strong>：字段名（key）叫&quot;姓名&quot;，值（value）是&quot;小明&quot;</li>
+</ul>
+<h3 id="n8n-数据结构的官方格式"><a class="anchor" href="#n8n-数据结构的官方格式" aria-hidden="true"></a>n8n 数据结构的官方格式</h3><p>n8n 在每个数据项外面还包了一层 <code>json</code> 键（特殊场景还有 <code>binary</code> 键放文件、图片等二进制数据）：</p>
+<pre><code class="language-json">[
+  {
+    &quot;json&quot;: {
+      &quot;姓名&quot;: &quot;小明&quot;,
+      &quot;年龄&quot;: 18
+    }
+  },
+  {
+    &quot;json&quot;: {
+      &quot;姓名&quot;: &quot;小红&quot;,
+      &quot;年龄&quot;: 20
+    }
+  }
+]
+</code></pre>
+<blockquote>
+<p>💡 <strong>小白提示</strong>：你在界面上看到的 INPUT/OUTPUT 面板，展示的就是这种数据结构。NASA 节点返回的每条数据里就有 <code>classType</code>、<code>beginTime</code> 等字段——第 03 章你拖拽的 <code>classType</code> 就是这个结构里的一个键。</p>
+</blockquote>
+<h3 id="数据怎么流动-how-data-flows"><a class="anchor" href="#数据怎么流动-how-data-flows" aria-hidden="true"></a>数据怎么流动 / How Data Flows</h3><blockquote>
+<p><strong>官方原文</strong>：When you connect nodes in a workflow, data automatically passes from one node to the next. Nodes process multiple items automatically.
+<strong>翻译</strong>：当你连接节点后，数据自动从一个节点传到下一个。节点会自动处理多条数据项。</p>
+</blockquote>
+<p><strong>要点</strong>：</p>
+<ol>
+<li>数据沿连线自动流动，不需要手动搬运。</li>
+<li>上游节点有 3 条数据，下游节点就会<strong>逐条处理 3 次</strong>（比如创建 3 张卡片、发 3 封邮件）。</li>
+<li>上一个节点的输出 = 下一个节点的输入。</li>
+</ol>
+<hr>
+<h2 id="2-什么是表达式-what-are-expressions"><a class="anchor" href="#2-什么是表达式-what-are-expressions" aria-hidden="true"></a>2. 什么是表达式？/ What Are Expressions?</h2><blockquote>
+<p><strong>官方原文</strong>：Expressions allow you to populate node parameters dynamically by executing JavaScript code. Instead of providing a static value, you can use the n8n expression syntax to define the value using data from previous nodes.
+<strong>翻译</strong>：表达式允许你通过执行 JavaScript 代码动态填充节点参数。你不需要提供固定值，而是可以用表达式语法，根据前一个节点的数据来定义值。</p>
+</blockquote>
+<p><strong>大白话</strong>：表达式就是「自动填值」。两种对比：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>写法</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>固定值</td>
+<td>填 <code>X1.2</code></td>
+<td>永远显示 X1.2</td>
+</tr>
+<tr>
+<td>表达式</td>
+<td><code>{{$json[&quot;classType&quot;]}}</code></td>
+<td>每次运行时自动取当前数据的 classType 值</td>
+</tr>
+</tbody></table>
+<h3 id="表达式的三种写法-由简到繁"><a class="anchor" href="#表达式的三种写法-由简到繁" aria-hidden="true"></a>表达式的三种写法（由简到繁）</h3><p><strong>写法 1：点语法（推荐新手）</strong></p>
+<pre><code class="language-js">{{ $json.城市 }}
+</code></pre>
+<p>取当前数据里 <code>城市</code> 字段的值。上一章你拖拽生成的 <code>{{$json[&quot;classType&quot;]}}</code> 和这个是等价的。</p>
+<p><strong>写法 2：方括号语法</strong></p>
+<pre><code class="language-js">{{ $json[&quot;城市&quot;] }}
+</code></pre>
+<p>和写法 1 效果一样，字段名带特殊字符（空格、横杠等）时必须用这种。</p>
+<p><strong>写法 3：嵌套字段</strong></p>
+<p>如果数据是嵌套的（字段里还有字段）：</p>
+<pre><code class="language-js">{{ $json.body.city }}
+</code></pre>
+<blockquote>
+<p><strong>官方示例</strong>：Webhook 收到的数据里有个 <code>body</code> 对象包含 <code>city</code> 字段，用 <code>{{$json.body.city}}</code> 就能取出城市名。
+官方原文：This expression: 1. Accesses the incoming JSON-formatted data using n8n&#39;s custom <code>$json</code> variable. 2. Finds the value of <code>city</code>.
+翻译：这个表达式：1. 通过 n8n 的 <code>$json</code> 变量访问传入的 JSON 数据；2. 找到 <code>city</code> 的值。</p>
+</blockquote>
+<h3 id="关键内置变量速查-key-built-in-variables"><a class="anchor" href="#关键内置变量速查-key-built-in-variables" aria-hidden="true"></a>关键内置变量速查 / Key Built-in Variables</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$json</code></td>
+<td>当前节点收到的数据</td>
+<td><code>{{ $json.字段名 }}</code></td>
+</tr>
+<tr>
+<td><code>$now</code></td>
+<td>当前时间</td>
+<td><code>{{ $now }}</code></td>
+</tr>
+<tr>
+<td><code>$today</code></td>
+<td>今天日期</td>
+<td><code>{{ $today.minus(7, &#39;days&#39;) }}</code>（第 03 章用过）</td>
+</tr>
+<tr>
+<td><code>$(&quot;节点名&quot;)</code></td>
+<td>指定节点的数据</td>
+<td><code>{{ $(&#39;NASA&#39;).item.json.classType }}</code></td>
+</tr>
+<tr>
+<td><code>$env</code></td>
+<td>环境变量</td>
+<td><code>{{ $env.变量名 }}</code></td>
+</tr>
+<tr>
+<td><code>$vars</code></td>
+<td>自定义变量（第 11 章详讲）</td>
+<td><code>{{ $vars.我的变量 }}</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-新手最省力的技巧-拖拽-the-easiest-way-drag-drop"><a class="anchor" href="#3-新手最省力的技巧-拖拽-the-easiest-way-drag-drop" aria-hidden="true"></a>3. 新手最省力的技巧：拖拽 / The Easiest Way: Drag &amp; Drop</h2><p><strong>不需要背语法！</strong> 官方推荐的做法是<strong>拖拽</strong>：</p>
+<ol>
+<li>打开节点设置，鼠标悬停在某个输入框上，会出现 <strong>Expression（表达式）</strong> 选项卡。</li>
+<li>切换到 Expression 选项卡，点展开按钮打开完整表达式编辑器。</li>
+<li>左侧/下方是 <strong>INPUT（输入）面板</strong>，显示上一节点的数据。</li>
+<li><strong>直接把想要的字段拖进编辑器</strong>，n8n 自动生成正确的表达式引用。</li>
+</ol>
+<blockquote>
+<p>官方原文：You can map <code>fruit</code> by dragging and dropping <strong>fruit</strong> from the <strong>INPUT</strong> into the field where you want to use its value. This creates an expression, <code>{{ $json.fruit }}</code>.
+翻译：你可以把 INPUT 面板里的字段拖拽到你想要使用其值的位置，这会生成一个表达式 <code>{{ $json.fruit }}</code>。</p>
+</blockquote>
+<hr>
+<h2 id="4-数据转换的最佳实践-best-practice-transform-data-with-edit-fields"><a class="anchor" href="#4-数据转换的最佳实践-best-practice-transform-data-with-edit-fields" aria-hidden="true"></a>4. 数据转换的最佳实践 / Best Practice: Transform Data with Edit Fields</h2><p>官方明确建议：<strong>不要</strong>在多个节点里写复杂表达式，而是先用专门的数据处理节点整理好数据。</p>
+<blockquote>
+<p><strong>官方原文</strong>：If your main goal is to transform data using expressions without performing any other operations, use the <strong>Edit Fields (Set)</strong> node. This node is designed specifically for data transformation, providing a clean interface to: Add new fields with expression-based values; Modify existing field values; Remove or rename fields. <strong>Best practice</strong>: Instead of adding complex expressions to multiple parameters across different nodes, use Edit Fields to prepare your data first.
+<strong>翻译</strong>：如果你主要想用表达式转换数据，请使用 <strong>Edit Fields（编辑字段/Set）节点</strong>。它专为数据转换设计，界面清爽，可以：添加基于表达式的新字段、修改现有字段值、删除或重命名字段。<strong>最佳实践</strong>：不要在多个节点里堆复杂表达式，先用 Edit Fields 把数据准备好，再传给后续节点。</p>
+</blockquote>
+<p><strong>新手速记</strong>：「取数 → Edit Fields 整理 → 下游使用」是一条健康的工作流结构。</p>
+<hr>
+<h2 id="5-数据固定与模拟-pin-mock-data-开发期两大法宝"><a class="anchor" href="#5-数据固定与模拟-pin-mock-data-开发期两大法宝" aria-hidden="true"></a>5. 数据固定与模拟 / Pin &amp; Mock Data（开发期两大法宝）</h2><p>开发工作流时，你往往不想反复请求外部系统、也不想被真实数据干扰。n8n 提供两个配套功能：</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>中文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Data Mocking</strong></td>
+<td>数据模拟</td>
+<td>造一份「假数据」来测试逻辑，不用连真实数据源</td>
+</tr>
+<tr>
+<td><strong>Data Pinning</strong></td>
+<td>数据固定</td>
+<td>把（模拟的或真实的）测试数据<strong>存起来</strong>，以后每次执行都用这份，不再去抓新数据</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>官方原文：Both approaches save time and resources during development, help you work with consistent datasets, and protect live systems from repeated test calls.
+翻译：两种方法都能在开发期节省时间和资源、让测试数据集保持一致，还能保护线上系统不被反复测试调用打扰。</p>
+<p>⚠️ <strong>注意</strong>：这些是<strong>开发专用</strong>功能，<strong>生产执行会自动忽略所有固定的数据</strong>。</p>
+</blockquote>
+<h3 id="怎么造模拟数据-mock"><a class="anchor" href="#怎么造模拟数据-mock" aria-hidden="true"></a>怎么造模拟数据（Mock）？</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>怎么做</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Edit Fields 节点</strong></td>
+<td>添加字段 → 填自定义值</td>
+<td>小规模测试</td>
+</tr>
+<tr>
+<td><strong>Code 节点</strong></td>
+<td>用 JavaScript 生成任意数据集</td>
+<td>复杂/边界情况</td>
+</tr>
+<tr>
+<td><strong>Customer Datastore 节点</strong></td>
+<td>内置假客户数据集，执行即可看</td>
+<td>纯探索 n8n 时</td>
+</tr>
+</tbody></table>
+<h3 id="怎么固定数据-pin"><a class="anchor" href="#怎么固定数据-pin" aria-hidden="true"></a>怎么固定数据（Pin）？</h3><ol>
+<li>运行节点，让它把数据拉回来（或先造好模拟数据）。</li>
+<li>在节点的 <strong>OUTPUT（输出）</strong> 面板，切换到 <strong>JSON</strong> 视图。</li>
+<li>点 <strong>Edit（编辑）</strong> 可以手改数据（用来构造边界场景），点固定图标（或快捷键 <code>P</code>）即可固定。</li>
+<li>之后每次运行，n8n 直接用这份固定数据，不再请求外部服务。想解除就点面板顶部的 <strong>Unpin</strong> 横幅。</li>
+</ol>
+<blockquote>
+<p>💡 <strong>小白场景</strong>：你搭的「天气播报」工作流依赖外部 API，调试邮件排版时每次都要等 API 返回？<strong>Pin 住数据</strong>，改邮件节点时秒级测试，最后发布前记得 Unpin（生产环境本来就会忽略）。</p>
+</blockquote>
+<hr>
+<h2 id="6-筛选数据-filtering-data"><a class="anchor" href="#6-筛选数据-filtering-data" aria-hidden="true"></a>6. 筛选数据 / Filtering Data</h2><p>n8n 里「筛选」有两层意思，别搞混：</p>
+<h3 id="6-1-界面可视化筛选-不改数据"><a class="anchor" href="#6-1-界面可视化筛选-不改数据" aria-hidden="true"></a>6.1 界面可视化筛选（不改数据）</h3><p>在节点 INPUT/OUTPUT 面板顶部点 <strong>Search</strong>，输入关键词即可过滤显示。<strong>纯视觉</strong>，不改变、不删除数据，关掉节点就重置。</p>
+<h3 id="6-2-工作流运行中真实筛选-改数据"><a class="anchor" href="#6-2-工作流运行中真实筛选-改数据" aria-hidden="true"></a>6.2 工作流运行中真实筛选（改数据）</h3><table>
+<thead>
+<tr>
+<th>想干什么</th>
+<th>用哪个节点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>只保留满足条件的<strong>整条数据</strong></td>
+<td><strong>Filter（筛选）节点</strong></td>
+</tr>
+<tr>
+<td>去掉对象里的<strong>某些字段</strong>（保留条目本身）</td>
+<td><strong>Edit Fields（Set）节点</strong>，配置为删除字段</td>
+</tr>
+<tr>
+<td>过滤数组内部元素（字段里的列表）</td>
+<td>表达式 <code>.filter()</code> 方法，如 <code>{{ $json.myArray.filter(item =&gt; item.value &gt; 10) }}</code></td>
+</tr>
+<tr>
+<td>去掉历史执行里见过的<strong>重复数据</strong></td>
+<td><strong>Remove Duplicates（去重）节点</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>小白区分</strong>：<code>If</code> 是「分流」（真/假两条路都保留），<code>Filter</code> 是「筛掉」（不满足的整条丢弃）。按需选择。</p>
+</blockquote>
+<hr>
+<h2 id="7-数据表-data-tables-data-tables"><a class="anchor" href="#7-数据表-data-tables-data-tables" aria-hidden="true"></a>7. 数据表（Data Tables）/ Data Tables</h2><blockquote>
+<p><strong>官方出处</strong>：<code>docs/build/work-with-data/data-tables.md</code></p>
+</blockquote>
+<p><strong>Data Tables（数据表）</strong> 是 n8n 内置的「小数据库」，让你<strong>不用搭外部数据库</strong>就能在工作流里保存、管理、查询结构化数据。适合：</p>
+<ul>
+<li>跨工作流持久化数据（同一个项目里）</li>
+<li>存标记防止重复运行（去重游标）</li>
+<li>跨工作流复用提示词/消息</li>
+<li>存 AI 评测数据、工作流运行结果</li>
+<li>做查询表（lookup table）</li>
+</ul>
+<p><strong>三种操作方式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Data Table 节点</strong></td>
+<td>在工作流里自动增删改查（创建、读取、更新、删除）</td>
+</tr>
+<tr>
+<td><strong>Data tables 选项卡</strong></td>
+<td>在项目里可视化建表、导 CSV、编辑行列</td>
+</tr>
+<tr>
+<td><strong>DataTable API</strong></td>
+<td>用 n8n API 的 <code>/datatables</code> 端点编程操作（进阶）</td>
+</tr>
+</tbody></table>
+<p><strong>新手最快上手</strong>：项目页点 <strong>Data tables</strong> 选项卡 → 右上角 <strong>Create Data table</strong> → 选「从零建表」或「导入 CSV」。</p>
+<blockquote>
+<p>⚠️ <strong>限制速览</strong>：默认实例总存储上限 200 MiB（自部署可用环境变量 <code>N8N_DATA_TABLES_MAX_SIZE_BYTES</code> 调整）；数据表<strong>属于项目</strong>，跨项目不行（想跨项目用 Variables 变量）。</p>
+</blockquote>
+<h3 id="数据表-vs-变量-data-tables-vs-variables"><a class="anchor" href="#数据表-vs-变量-data-tables-vs-variables" aria-hidden="true"></a>数据表 vs 变量 / Data Tables vs Variables</h3><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>Data Tables</th>
+<th>Variables</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>表格视图、行列结构</td>
+<td>✅</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>跨项目访问</td>
+<td>✗</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>适合存长结构化数据</td>
+<td>✅</td>
+<td>✗（值上限 1000 字符）</td>
+</tr>
+<tr>
+<td>在表达式里直接取用</td>
+<td>✗</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="8-特殊数据类型速览-special-data-types"><a class="anchor" href="#8-特殊数据类型速览-special-data-types" aria-hidden="true"></a>8. 特殊数据类型速览 / Special Data Types</h2><blockquote>
+<p><strong>官方出处</strong>：<code>docs/build/work-with-data/handle-special-data-types/</code></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>官方章节</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>日期与时间</strong></td>
+<td><code>work-with-dates-and-times.md</code></td>
+<td>n8n 内置 Luxon 日期库，<code>$now.plus(1,&#39;day&#39;)</code>、<code>DateTime.fromISO(...)</code> 等</td>
+</tr>
+<tr>
+<td><strong>文件与图片</strong></td>
+<td><code>work-with-files-and-images.md</code></td>
+<td>二进制数据（binary）节点：读文件、转格式、发附件</td>
+</tr>
+<tr>
+<td><strong>JSON 查询</strong></td>
+<td><code>query-json-data.md</code></td>
+<td>用 JMESPath 语法在表达式里查询复杂 JSON，如 <code>{{ $json.orders[?price &gt; </code>100<code>].id }}</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 这节内容在遇到具体需求时再回来查，不用现在背。</p>
+</blockquote>
+<hr>
+<h2 id="9-表达式常见报错与解决-common-expression-errors"><a class="anchor" href="#9-表达式常见报错与解决-common-expression-errors" aria-hidden="true"></a>9. 表达式常见报错与解决 / Common Expression Errors</h2><p>以下内容翻译整理自官方手册「Common issues」小节，都是新手高频坑：</p>
+<h3 id="9-1-can-t-get-data-for-expression-无法获取表达式数据"><a class="anchor" href="#9-1-can-t-get-data-for-expression-无法获取表达式数据" aria-hidden="true"></a>9.1 &quot;Can&#39;t get data for expression&quot;（无法获取表达式数据）</h3><ul>
+<li><strong>原因</strong>：表达式引用的上一个节点<strong>还没执行过</strong>，没有数据可取。</li>
+<li><strong>解决</strong>：先执行（Execute step）那个被引用的节点，再回来测试当前节点。</li>
+<li><strong>变体</strong>：报错提示 <code>An expression references the node &#39;&lt;node-name&gt;&#39;, but it hasn&#39;t been executed yet</code>——意思完全一样：先执行 <code>&lt;node-name&gt;</code> 这个节点。</li>
+</ul>
+<h3 id="9-2-the-json-output-in-item-0-contains-invalid-json-json-输出无效"><a class="anchor" href="#9-2-the-json-output-in-item-0-contains-invalid-json-json-输出无效" aria-hidden="true"></a>9.2 &quot;The &#39;JSON Output&#39; in item 0 contains invalid JSON&quot;（JSON 输出无效）</h3><ul>
+<li><strong>原因</strong>：在 JSON 模式里填了不是合法 JSON 的内容；或引用了并不存在的字段。</li>
+<li><strong>解决</strong>：用 <a href="https://jsonlint.com/">https://jsonlint.com/</a> 校验 JSON 格式；确认引用的字段在输入数据里真实存在。</li>
+</ul>
+<h3 id="9-3-invalid-syntax-语法无效"><a class="anchor" href="#9-3-invalid-syntax-语法无效" aria-hidden="true"></a>9.3 &quot;Invalid syntax&quot;（语法无效）</h3><ul>
+<li><strong>原因</strong>：表达式有拼写/标点错误，比如多了个句点 <code>{{ $(&#39;If&#39;).item.json. }}</code>。</li>
+<li><strong>解决</strong>：对照第 2 节的写法检查，或删掉重新拖拽生成。</li>
+</ul>
+<blockquote>
+<p>💡 <strong>小白口诀</strong>：表达式报错 → ① 上一节点跑了没？② 字段名打错没？③ 直接用拖拽重做一遍。</p>
+</blockquote>
+<hr>
+<h2 id="10-进阶技巧-了解即可-advanced-tips-optional"><a class="anchor" href="#10-进阶技巧-了解即可-advanced-tips-optional" aria-hidden="true"></a>10. 进阶技巧（了解即可）/ Advanced Tips (Optional)</h2><ul>
+<li><strong>长表达式</strong>：想写多行 JavaScript 逻辑，需要包上 IIFE 语法 <code>{{(()=&gt;{ ... })()}}</code>——新手可以先跳过（第 11 章有完整例子）。</li>
+<li><strong>三元运算符</strong>：表达式里直接写条件，如 <code>{{ $json.age &gt;= 18 ? &#39;成年&#39; : &#39;未成年&#39; }}</code>。</li>
+<li><strong>在凭据里用表达式</strong>：有些服务的 access token 会随每次请求变化，可以在凭据字段里填表达式动态取值（第 09 章详讲）。</li>
+<li><strong>Code 节点</strong>：需要更复杂处理时用 Code 节点写 JavaScript（第 11 章）。</li>
+</ul>
+<hr>
+<p><strong>下一章 →</strong> <a href="05-%E7%BC%96%E8%BE%91%E5%99%A8%E7%95%8C%E9%9D%A2%E4%B8%8E%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7.html">05 · 编辑器界面与操作技巧</a></p>
+</article>
+    <div class="prevnext"><a class="pn-box" href="03-创建第一个工作流.html"><span class="pn-dir">← Prev / 上一章</span><span class="pn-title">03 · 第一个工作流 <em>Build Your First Workflow</em></span></a><a class="pn-box pn-next" href="05-编辑器界面与操作技巧.html"><span class="pn-dir">Next / 下一章 →</span><span class="pn-title">05 · 编辑器与操作 <em>Editor & Shortcuts</em></span></a></div>
+    <footer class="page-footer">
+      <span class="pf-code">N8N Tutorial · Fair-code</span>
+      <p>本教程由 n8n 官方手册中英对照整理，仅供学习交流 · <a href="https://github.com/n8n-io/n8n-docs" target="_blank" rel="noopener">官方文档</a></p>
+    </footer>
+  </main>
+
+  <aside class="toc" id="toc" aria-label="本页目录">
+    <div class="toc-title">本页目录 / On This Page</div>
+    <nav><a class="toc-h2" href="#本节目标-what-you-ll-learn">本节目标 / What You&#39;ll Learn</a>
+<a class="toc-h2" href="#1-n8n-的数据结构-how-n8n-structures-data">1. n8n 的数据结构 / How n8n Structures Data</a>
+<a class="toc-h3" href="#n8n-数据结构的官方格式">n8n 数据结构的官方格式</a>
+<a class="toc-h3" href="#数据怎么流动-how-data-flows">数据怎么流动 / How Data Flows</a>
+<a class="toc-h2" href="#2-什么是表达式-what-are-expressions">2. 什么是表达式？/ What Are Expressions?</a>
+<a class="toc-h3" href="#表达式的三种写法-由简到繁">表达式的三种写法（由简到繁）</a>
+<a class="toc-h3" href="#关键内置变量速查-key-built-in-variables">关键内置变量速查 / Key Built-in Variables</a>
+<a class="toc-h2" href="#3-新手最省力的技巧-拖拽-the-easiest-way-drag-drop">3. 新手最省力的技巧：拖拽 / The Easiest Way: Drag &amp; Drop</a>
+<a class="toc-h2" href="#4-数据转换的最佳实践-best-practice-transform-data-with-edit-fields">4. 数据转换的最佳实践 / Best Practice: Transform Data with Edit Fields</a>
+<a class="toc-h2" href="#5-数据固定与模拟-pin-mock-data-开发期两大法宝">5. 数据固定与模拟 / Pin &amp; Mock Data（开发期两大法宝）</a>
+<a class="toc-h3" href="#怎么造模拟数据-mock">怎么造模拟数据（Mock）？</a>
+<a class="toc-h3" href="#怎么固定数据-pin">怎么固定数据（Pin）？</a>
+<a class="toc-h2" href="#6-筛选数据-filtering-data">6. 筛选数据 / Filtering Data</a>
+<a class="toc-h3" href="#6-1-界面可视化筛选-不改数据">6.1 界面可视化筛选（不改数据）</a>
+<a class="toc-h3" href="#6-2-工作流运行中真实筛选-改数据">6.2 工作流运行中真实筛选（改数据）</a>
+<a class="toc-h2" href="#7-数据表-data-tables-data-tables">7. 数据表（Data Tables）/ Data Tables</a>
+<a class="toc-h3" href="#数据表-vs-变量-data-tables-vs-variables">数据表 vs 变量 / Data Tables vs Variables</a>
+<a class="toc-h2" href="#8-特殊数据类型速览-special-data-types">8. 特殊数据类型速览 / Special Data Types</a>
+<a class="toc-h2" href="#9-表达式常见报错与解决-common-expression-errors">9. 表达式常见报错与解决 / Common Expression Errors</a>
+<a class="toc-h3" href="#9-1-can-t-get-data-for-expression-无法获取表达式数据">9.1 &quot;Can&#39;t get data for expression&quot;（无法获取表达式数据）</a>
+<a class="toc-h3" href="#9-2-the-json-output-in-item-0-contains-invalid-json-json-输出无效">9.2 &quot;The &#39;JSON Output&#39; in item 0 contains invalid JSON&quot;（JSON 输出无效）</a>
+<a class="toc-h3" href="#9-3-invalid-syntax-语法无效">9.3 &quot;Invalid syntax&quot;（语法无效）</a>
+<a class="toc-h2" href="#10-进阶技巧-了解即可-advanced-tips-optional">10. 进阶技巧（了解即可）/ Advanced Tips (Optional)</a></nav>
+  </aside>
+</div>
+
+<script>var SEARCH_INDEX = [{"t":"n8n 零基础入门教程（中英对照 · 本土版）","u":"index.html","h":["本教程是什么 / What is this tutorial?","章节导航 / Table of Contents","第一阶段 · 入门 / Getting Started","第二阶段 · 核心概念 / Core Concepts","第三阶段 · 数据、代码与 AI / Data, Code &amp; AI","第四阶段 · 运维与扩展 / Operations &amp; Extending","附录 / Appendix","中英对照使用说明 / How to Read This Bilingual Tutorial","本土化说明 / Localization Notes","学习建议 / Study Tips"],"s":"n8n 零基础入门教程（中英对照 · 本土版） n8n Beginner Tutorial — Bilingual (中英对照) &amp; Beginner-Friendly Edition 本教程基于 n8n 官方手册 （ n8n-io/n8n-docs 仓库，即 docs.n8n.io 官方文档源码） 全面搜索、精读 后编写， 覆盖官方手册的 Get Started / Build / Deploy / Connect / Administer / Integratio"},{"t":"01 · 认识 n8n：概念与术语表","u":"01-认识n8n.html","h":["本节目标 / What You&#39;ll Learn","1. n8n 是什么？/ What is n8n?","n8n 适合谁用？","2. 核心概念速览 / Key Concepts at a Glance","2.1 工作流 / Workflow","2.2 节点 / Node","2.3 触发器 / Trigger Node","2.4 凭据 / Credential","2.5 表达式 / Expression","3. 中英对照术语速查表 / Bilingual Glossary","3.1 基础界面 / Basic UI","3.2 数据相关 / Data","3.3 逻辑与流程 / Logic &amp; Flow","3.4 AI 相关（了解即可）/ AI Terms","3.5 部署与计划 / Deployment &amp; Plans","4. 官方手册怎么看？/ How to Navigate the Official Manual"],"s":"01 · 认识 n8n：概念与术语表 What is n8n? Key Concepts &amp; Glossary 官方出处： docs/get-started/README.md 、 docs/get-started/key-concept-glossary.md 本节目标 / What You&#39;ll Learn n8n 是什么？能干什么？ 最重要的几个核心概念（节点、触发器、工作流、凭据、表达式） 一份中英对照的术语速查表（随时回来查） 不需要编程基础。 本节"},{"t":"02 · 选择使用方式与安装","u":"02-选择使用方式与安装.html","h":["本节目标 / What You&#39;ll Learn","1. 两种主要使用方式 / Two Main Options","官方选择建议（翻译整理）","2. 本土化建议（中国用户必读）/ Localization Advice","3. 开始使用 / Getting Started","3.1 方式 A：n8n Cloud（推荐纯新手体验）","3.2 方式 B：自部署——Docker 安装（推荐，含国内镜像加速）","3.3 方式 C：自部署——npm 安装（不需要 Docker 时）","4. 三种方式怎么选？一张图看懂 / Decision Flow","5. 更多部署方式一览 / More Deployment Options","6. 安装之后：别忘了升级 / Keep It Updated"],"s":"02 · 选择使用方式与安装 Choose How to Use n8n &amp; Install 官方出处： docs/get-started/choose-how-to-use-n8n.md 、 docs/deploy/host-n8n/install-options/install-with-docker.md 、 install-with-npm.md 本节目标 / What You&#39;ll Learn 云端（n8n Cloud）和自部署（Self-hoste"},{"t":"03 · 创建你的第一个工作流","u":"03-创建第一个工作流.html","h":["本节目标 / What You&#39;ll Learn","完成后工作流长这样 / The Finished Workflow","开始之前 / Before You Start","Step 1 · 新建工作流 / Create a New Workflow","Step 2 · 添加触发器节点 / Add a Trigger Node","Step 3 · 添加 NASA 节点并配置凭据 / Add the NASA Node &amp; Set Up Credentials","Step 4 · 用 If 节点添加逻辑 / Add Logic with the If Node","Step 5 · 输出工作流数据 / Output Data from Your Workflow","Step 6 · 测试整个工作流 / Test the Workflow","🎉 恭喜！/ Congratulations","7. 本土化替代练习（网络受限时）/ Alternative Practice Setup","8. 关于发布与版本（重要）/ Publish &amp; Versions"],"s":"03 · 创建你的第一个工作流 Build Your First Workflow 官方出处： docs/get-started/build-your-first-workflow.md （官方新手教程，本教程为其中英对照友好版） 官方教程原文地址： https://docs.n8n.io/get-started/build-your-first-workflow 本节目标 / What You&#39;ll Learn 中文版目标 ：亲手从零搭一个能用的自动化工作流——「每"},{"t":"04 · 数据与表达式","u":"04-数据与表达式.html","h":["本节目标 / What You&#39;ll Learn","1. n8n 的数据结构 / How n8n Structures Data","n8n 数据结构的官方格式","数据怎么流动 / How Data Flows","2. 什么是表达式？/ What Are Expressions?","表达式的三种写法（由简到繁）","关键内置变量速查 / Key Built-in Variables","3. 新手最省力的技巧：拖拽 / The Easiest Way: Drag &amp; Drop","4. 数据转换的最佳实践 / Best Practice: Transform Data with Edit Fields","5. 数据固定与模拟 / Pin &amp; Mock Data（开发期两大法宝）","怎么造模拟数据（Mock）？","怎么固定数据（Pin）？","6. 筛选数据 / Filtering Data","6.1 界面可视化筛选（不改数据）","6.2 工作流运行中真实筛选（改数据）","7. 数据表（Data Tables）/ Data Tables","数据表 vs 变量 / Data Tables vs Variables","8. 特殊数据类型速览 / Special Data Types","9. 表达式常见报错与解决 / Common Expression Errors","9.1 &quot;Can&#39;t get data for expression&quot;（无法获取表达式数据）","9.2 &quot;The &#39;JSON Output&#39; in item 0 contains invalid JSON&quot;（JSON 输出无效）","9.3 &quot;Invalid syntax&quot;（语法无效）","10. 进阶技巧（了解即可）/ Advanced Tips (Optional)"],"s":"04 · 数据与表达式 Data Structure &amp; Expressions 官方出处： docs/build/work-with-data/understand-n8ns-data-structure.md 、 transform-data/expressions-for-data-transformation.md 、 data-tables.md 、 pin-and-mock-data.md 、 filter-out-unwanted-data.md 本节目"},{"t":"05 · 编辑器界面与操作技巧","u":"05-编辑器界面与操作技巧.html","h":["本节目标 / What You&#39;ll Learn","1. 画布与节点面板 / Canvas &amp; Node Panel","2. 节点的基本操作 / Node Controls","3. 节点设置项详解 / Node Settings","4. 便利贴与画布分组 / Sticky Notes &amp; Canvas Groups","5. 高频键盘快捷键 / Keyboard Shortcuts","工作流级 / Workflow","画布导航 / Canvas","节点操作 / Nodes","节点内 / Inside Nodes","命令面板 / Command Bar","6. 一句话总结 / TL;DR"],"s":"05 · 编辑器界面与操作技巧 Editor, Nodes &amp; Keyboard Shortcuts 官方出处： docs/build/understand-workflows/workflow-components/README.md 、 work-with-nodes.md 、 connect-nodes-together.md 、 add-notes-and-documentation.md 、 canvas-groups.md 、 docs/build/key"},{"t":"06 · 保存、发布与版本管理","u":"06-保存发布与版本管理.html","h":["本节目标 / What You&#39;ll Learn","1. 自动保存 / How Saving Works","2. 发布是什么 / How Publishing Works","3. 发布按钮的 6 种状态 / Publish Button States","4. 版本历史 / Version History","5. 取消发布 / Unpublish","6. 多人协作的编辑锁 / Collaboration","7. 一句话总结 / TL;DR"],"s":"06 · 保存、发布与版本管理 Save, Publish &amp; Versioning 官方出处： docs/build/understand-workflows/save-and-publish-workflows.md 、 docs/build/manage-workflows/view-change-history.md 本节目标 / What You&#39;ll Learn 自动保存机制：没有保存按钮，也不用手动保存 发布（Publish）到底做什么：定时器、"},{"t":"07 · 执行与调试","u":"07-执行与调试.html","h":["本节目标 / What You&#39;ll Learn","1. 三种执行方式 / Types of Executions","局部执行（Partial Executions）的常见报错","执行配额（Quota）/ What Counts","2. 执行记录列表 / Execution Lists","筛选执行记录 / Filter","自定义执行数据 / Custom Executions Data","重试失败的执行 / Retry","3. 调试：拿旧数据修 Bug / Debug &amp; Re-run Past Executions","4. 脏节点 / Dirty Nodes","5. 实时流式响应 / Stream Real-Time Responses","6. 执行数据脱敏 / Execution Data Redaction","7. 与执行相关的工作流设置速查 / Related Workflow Settings","8. 一句话总结 / TL;DR"],"s":"07 · 执行与调试 Executions &amp; Debugging 官方出处： docs/build/understand-workflows/understand-executions/ （README、types-of-executions、debug-executions、view-executions-for-a-single-workflow、view-all-executions、understand-dirty-nodes、customize-execu"},{"t":"08 · 流程逻辑进阶","u":"08-流程逻辑进阶.html","h":["本节目标 / What You&#39;ll Learn","1. 多分支的执行顺序 / Execution Order","2. 分支 / Split: If &amp; Switch","3. 循环 / Loop（深入版）","3.1 自动循环：大多数时候你不需要建循环","3.2 需要手动建循环的场景 / Node Exceptions","3.3 两种循环结构","4. 合并 / Merge","5. 等待 / Wait","6. 错误处理 / Handle Errors Gracefully","6.1 错误工作流（Error Workflow）","6.2 主动制造失败：Stop And Error","6.3 节点级错误策略","7. 子工作流 / Sub-workflows","7.1 两个关键节点","7.2 一键转换：Convert to Sub-workflow","8. 常用数据节点清单 / Handy Node Cheat Sheet","9. 一句话总结 / TL;DR"],"s":"08 · 流程逻辑进阶 Flow Logic Deep Dive 官方出处： docs/build/flow-logic/ （README、split-with-conditionals、merge-data、loop、wait、handle-errors-gracefully、understand-execution-order、break-workflows-into-smaller-parts、convert-to-sub-workflows） 本节目标 / What "},{"t":"09 · 凭证管理","u":"09-凭证管理.html","h":["本节目标 / What You&#39;ll Learn","1. 凭证是什么 / What Are Credentials?","2. 创建凭证的三种入口 / How to Create","3. 凭证类型 / Credential Types","4. Allowed HTTP Request Domains / 允许的请求域名","5. 在凭证里用表达式 / Expressions in Credentials","6. 团队协作：凭证共享 / Sharing Credentials","7. 凭证覆盖与外部密钥库 / Advanced (Enterprise)","8. 一句话总结 / TL;DR"],"s":"09 · 凭证管理 Credentials 官方出处： docs/build/understand-workflows/create-and-edit-credentials.md 、 docs/administer/manage-credentials/README.md 、 share-credentials-securely.md 、 end-user-credentials.md 本节目标 / What You&#39;ll Learn 凭证（Credential）是"},{"t":"10 · 数据转换与常用数据节点","u":"10-数据转换与常用节点.html","h":["本节目标 / What You&#39;ll Learn","1. 什么时候需要「转换数据」？/ When to Transform","2. 四种转换手段怎么选 / Choose Your Approach","表达式里的小技巧 / Advanced Expression Tricks","3. 数据变换节点全家桶 / Transformation Node Cheat Sheet","4. UI Mapper：可视化映射 / UI Mapper","5. 特殊数据类型实战 / Working with Special Data Types","5.1 日期与时间 / Dates &amp; Times","5.2 文件与图片 / Files &amp; Images","5.3 查询复杂 JSON / Query JSON","6. 数据转换的推荐流程 / Recommended Pipeline","7. 一句话总结 / TL;DR"],"s":"10 · 数据转换与常用数据节点 Data Transformation &amp; Common Data Nodes 官方出处： docs/build/work-with-data/transform-data/approaches-for-transforming-data.md 、 expressions-versus-data-nodes.md 、 handle-special-data-types/work-with-dates-and-times.md 、 wo"},{"t":"11 · Code 节点与内置方法","u":"11-Code节点与内置方法.html","h":["本节目标 / What You&#39;ll Learn","1. 先想清楚：真的需要 Code 吗？/ Code or Not?","2. 两种运行模式 / Two Modes","3. 必背内置变量 / Built-in Variables &amp; Methods","4. 零基础也能抄的模板 / Copy-Paste Templates","5. 自定义变量 / Custom Variables","6. 让 AI 帮你写代码 / Get Coding Help from AI","7. 平台差异提醒 / Cloud vs Self-hosted","8. 一句话总结 / TL;DR"],"s":"11 · Code 节点与内置方法 Code Node &amp; Built-in Methods 官方出处： docs/build/code-in-n8n/README.md 、 using-the-code-node.md 、 use-built-in-shortcuts.md 、 define-custom-variables.md 、 get-coding-help-from-ai.md 、 cookbook/ 本节目标 / What You&#39;ll Lear"},{"t":"12 · AI 工作流入门","u":"12-AI工作流入门.html","h":["本节目标 / What You&#39;ll Learn","1. AI 工作流长什么样 / AI Workflow Structure","2. Agent vs Chain / Agents vs Chains","3. 记忆 / Memory","4. 工具 / Tools","5. RAG：接上你的知识库 / RAG &amp; Vector Stores","6. Chat Trigger：变成聊天机器人 / Chat Trigger","7. AI 测试与改进 / Test &amp; Improve AI Workflows","8. 一句话总结 / TL;DR"],"s":"12 · AI 工作流入门 AI Workflows Intro 官方出处： docs/build/integrate-ai/README.md 、 understand-ai-components/ （what-agents-do、what-chains-do、agents-vs-chains、how-memory-works、how-tools-work、retrieve-relevant-context）、 ai-examples.md 本节目标 / What You&"},{"t":"13 · AI 辅助构建、模板与社区","u":"13-AI辅助构建与模板.html","h":["本节目标 / What You&#39;ll Learn","1. 模板库 / Workflow Templates","2. AI Assistant / 对话式搭流程","3. AI Workflow Builder / 自然语言生成工作流","4. Chat Hub / 统一 AI 聊天入口","5. 社区节点 / Community Nodes","6. 一句话总结 / TL;DR"],"s":"13 · AI 辅助构建、模板与社区 AI Builders, Templates &amp; Community 官方出处： docs/build/ways-of-building-workflows/ （use-templates、ai-assistant、use-the-ai-assistant、ai-workflow-builder、chat-hub）、 docs/integrations/README.md 本节目标 / What You&#39;ll Learn "},{"t":"14 · 管理工作流与团队协作","u":"14-管理工作流与团队协作.html","h":["本节目标 / What You&#39;ll Learn","1. 工作流设置清单 / Workflow Settings","2. 标签 / Tags","3. 导出与导入 / Export &amp; Import","4. 分享与权限 / Sharing &amp; Permissions","5. 项目、用户与角色 / Projects, Users &amp; Roles","6. 源码控制与环境（进阶）/ Source Control &amp; Environments","7. 一句话总结 / TL;DR"],"s":"14 · 管理工作流与团队协作 Manage Workflows &amp; Collaborate 官方出处： docs/build/manage-workflows/ （configure-workflow-settings、tag-workflows、export-and-import、share-with-others、n8n-packages）、 docs/administer/manage-users-and-access/README.md 、 use-sour"},{"t":"15 · 部署、升级与运维","u":"15-部署升级与运维.html","h":["本节目标 / What You&#39;ll Learn","1. 自部署方式对比 / Self-hosted Options","2. 数据库 / Database","3. 环境变量必配项 / Key Environment Variables","4. 升级与迁移 / Updating &amp; Migrating","5. n8n Cloud / n8n Cloud","6. 版本对比 / Community vs Business vs Enterprise","7. 运维三件套 / Operate: Logs, Monitoring &amp; CLI","8. 架构速览（了解即可）/ Architecture","9. 一句话总结 / TL;DR"],"s":"15 · 部署、升级与运维 Deploy, Upgrade &amp; Operate 官方出处： docs/deploy/ （host-n8n/README.md、install-options/*、community-edition-features.md、configure-n8n/manage-settings-using-environment-variables.md、scaling.md、use-the-command-line.md、understand-th"},{"t":"16 · API、CLI 与 MCP","u":"16-API-CLI与MCP.html","h":["本节目标 / What You&#39;ll Learn","1. 三种方式怎么选 / Choose Your Interface","2. n8n API 入门 / n8n Public REST API","3. n8n CLI / 远程命令行客户端","4. MCP：让 AI 直接操作 n8n / Connect with MCP","5. 一句话总结 / TL;DR"],"s":"16 · API、CLI 与 MCP API, CLI &amp; MCP 官方出处： docs/connect/README.md 、 n8n-api/README.md 、 n8n-api/authentication.md 、 n8n-cli.md 、 connect-to-n8n-mcp-server.md 、 build/ways-of-building-workflows/connect-to-n8n-mcp-server.md 本节目标 / What You&#"},{"t":"17 · 常见问题排查与学习路线","u":"17-常见问题与学习路线.html","h":["本节目标 / What You&#39;ll Learn","1. 新手常见问题排查表 / Common Issues &amp; Fixes","1.1 安装 / 启动问题","1.2 网络 / 访问问题（本土化重点）","1.3 节点 / 数据问题","1.4 执行 / 发布问题","2. 官方学习路径 / Official Learning Paths","推荐学习顺序 / Suggested Path","3. 学习资源清单 / Resource List","官方资源 / Official","中文资源 / Chinese Resources","4. 给新手的最后建议 / Final Advice","附：本教程与官方手册对照表 / Mapping to the Official Manual"],"s":"17 · 常见问题排查与学习路线 Troubleshooting &amp; Learning Paths 官方出处： docs/get-started/learning-paths.md 、官方手册各章节 FAQ / Common issues 小节 本节目标 / What You&#39;ll Learn 新手最常见问题的排查表（安装、网络、节点、表达式、执行、发布） 官方推荐的进阶学习路径 中文学习者可用的资源清单 养成「查官方手册」的习惯 1. 新手常见问题排查表 /"}];</script>
+<script src="app.js"></script>
+</body>
+</html>
