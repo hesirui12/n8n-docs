@@ -19,13 +19,30 @@ const DIST = join(ROOT, 'dist');                   // 输出目录
 /* 1. 页面元数据：顺序 = 手册目录顺序                                      */
 /* ------------------------------------------------------------------ */
 const PAGES = [
+  /* —— 开始 Getting Started —— */
   { file: 'README.md',               out: 'index.html',                label: '首页',                en: 'Overview',                group: '开始' },
   { file: '01-认识n8n.md',           out: '01-认识n8n.html',           label: '01 · 认识 n8n',       en: 'Concepts & Glossary',     group: '开始' },
   { file: '02-选择使用方式与安装.md', out: '02-选择使用方式与安装.html', label: '02 · 选择与安装',     en: 'Choose & Install',        group: '开始' },
-  { file: '03-创建第一个工作流.md',   out: '03-创建第一个工作流.html',   label: '03 · 第一个工作流',   en: 'Build Your First Workflow', group: '实战' },
-  { file: '04-核心概念深入.md',       out: '04-核心概念深入.html',       label: '04 · 核心概念深入',   en: 'Data & Expressions',      group: '实战' },
-  { file: '05-流程逻辑与进阶.md',     out: '05-流程逻辑与进阶.html',     label: '05 · 流程逻辑与进阶', en: 'Flow Logic & Next Steps', group: '实战' },
-  { file: '06-常见问题与学习路线.md', out: '06-常见问题与学习路线.html', label: '06 · 排查与学习路线', en: 'Troubleshooting & Paths', group: '实战' },
+  { file: '03-创建第一个工作流.md',   out: '03-创建第一个工作流.html',   label: '03 · 第一个工作流',   en: 'Build Your First Workflow', group: '开始' },
+  /* —— 核心 Core —— */
+  { file: '04-数据与表达式.md',       out: '04-数据与表达式.html',       label: '04 · 数据与表达式',   en: 'Data & Expressions',      group: '核心' },
+  { file: '05-编辑器界面与操作技巧.md', out: '05-编辑器界面与操作技巧.html', label: '05 · 编辑器与操作',   en: 'Editor & Shortcuts',      group: '核心' },
+  { file: '06-保存发布与版本管理.md',  out: '06-保存发布与版本管理.html',  label: '06 · 保存与发布',     en: 'Save & Publish',          group: '核心' },
+  { file: '07-执行与调试.md',         out: '07-执行与调试.html',         label: '07 · 执行与调试',     en: 'Executions & Debug',      group: '核心' },
+  { file: '08-流程逻辑进阶.md',       out: '08-流程逻辑进阶.html',       label: '08 · 流程逻辑进阶',   en: 'Flow Logic Deep Dive',    group: '核心' },
+  /* —— 数据与代码 Data & Code —— */
+  { file: '09-凭证管理.md',           out: '09-凭证管理.html',           label: '09 · 凭证管理',       en: 'Credentials',             group: '数据与代码' },
+  { file: '10-数据转换与常用节点.md',  out: '10-数据转换与常用节点.html',  label: '10 · 数据转换与节点', en: 'Transform & Data Nodes',  group: '数据与代码' },
+  { file: '11-Code节点与内置方法.md',  out: '11-Code节点与内置方法.html',  label: '11 · Code 节点',      en: 'Code Node & Methods',     group: '数据与代码' },
+  /* —— AI 进阶 AI —— */
+  { file: '12-AI工作流入门.md',       out: '12-AI工作流入门.html',       label: '12 · AI 工作流入门',  en: 'AI Workflows Intro',      group: 'AI 进阶' },
+  { file: '13-AI辅助构建与模板.md',   out: '13-AI辅助构建与模板.html',   label: '13 · AI 构建与模板',  en: 'AI Builders & Templates', group: 'AI 进阶' },
+  /* —— 运维与扩展 Ops & Extend —— */
+  { file: '14-管理工作流与团队协作.md', out: '14-管理工作流与团队协作.html', label: '14 · 管理与协作',     en: 'Manage & Collaborate',    group: '运维与扩展' },
+  { file: '15-部署升级与运维.md',      out: '15-部署升级与运维.html',      label: '15 · 部署与运维',     en: 'Deploy & Operate',        group: '运维与扩展' },
+  { file: '16-API-CLI与MCP.md',       out: '16-API-CLI与MCP.html',       label: '16 · API / CLI / MCP',en: 'API · CLI · MCP',         group: '运维与扩展' },
+  /* —— 附录 Appendix —— */
+  { file: '17-常见问题与学习路线.md',  out: '17-常见问题与学习路线.html',  label: '17 · 排查与学习路线', en: 'Troubleshooting & Paths', group: '附录' },
 ];
 
 /* ------------------------------------------------------------------ */
