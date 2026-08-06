@@ -36,7 +36,12 @@ const server = Bun.serve({
     // 简易防目录穿越
     if (path.includes('..')) return new Response('Forbidden', { status: 403 });
 
-    const file = Bun.file(join(DIST, path));
+    let file = Bun.file(join(DIST, path));
+    if (!(await file.exists()) && !path.includes('.')) {
+      // 目录索引：/official/ 或 /official → index.html
+      const idx = join(DIST, path, 'index.html');
+      if (await Bun.file(idx).exists()) file = Bun.file(idx);
+    }
     if (await file.exists()) {
       const ext = path.slice(path.lastIndexOf('.')) || '';
       return new Response(file, { headers: { 'Content-Type': MIME[ext] ?? 'application/octet-stream' } });

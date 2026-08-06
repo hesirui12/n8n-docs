@@ -414,12 +414,143 @@ async function build() {
     }
   }
 
-  // 7. official 根 index.html → 入门
-  await writeFile(join(DIST, 'index.html'),
-    `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./get-started/index.html"></head><body><a href="./get-started/index.html">n8n 官方文档</a></body></html>`);
+  // 7. official 根 index.html → 文档首页（搜索 + 板块导航）
+  const homeHtml = renderHomepage(sectionNavHtml(''), total, navBySection)
+    .replace('var SEARCH_INDEX = null;', `var SEARCH_INDEX = ${JSON.stringify(searchIndex)};`);
+  await writeFile(join(DIST, 'index.html'), homeHtml);
 
   console.log(`✅ 官方版构建完成 → ${DIST}（${total} 页）`);
 }
 
+/* ------------------------------------------------------------------ */
+/* 文档首页（/official/）：搜索 + 板块导航                               */
+/* ------------------------------------------------------------------ */
+function renderHomepage(sectionNav: string, pageCount: number, navBySection: Record<string, NavNode[]>): string {
+  const cards = SECTIONS.map((s) => {
+    const first = navBySection[s.dir]?.[0];
+    const target = first ? navTarget(s.dir, first.file) : `${s.dir}/index.html`;
+    return `<a class="hp-card" href="./${target}">
+      <span class="hp-card-name">${s.zh}</span>
+      <span class="hp-card-en">${s.en}</span>
+      <span class="hp-card-go">进入 →</span>
+    </a>`;
+  }).join('\n');
+
+  return `<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>n8n 官方文档（中文本土化版）</title>
+<meta name="description" content="docs.n8n.io 1:1 离线还原版：全站搜索、中文本土化核心章节、GitBook 风格。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23ea4b71'/%3E%3Ctext x='50' y='68' font-size='42' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3En8n%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./official.css">
+<style>
+.hp {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+.hp-hero { margin-bottom: 40px; }
+.hp-hero h1 {
+  font-size: 34px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+}
+.hp-hero p { color: var(--gb-muted); font-size: 15px; margin: 0 0 22px; }
+.hp-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 640px;
+  padding: 13px 18px;
+  font-size: 15px;
+  color: var(--gb-muted);
+  background: #fff;
+  border: 1.5px solid var(--gb-border-strong);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.hp-search:hover { border-color: var(--gb-link); }
+.hp-search kbd { margin-left: auto; }
+.hp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.hp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--gb-border);
+  border-radius: 8px;
+  color: var(--gb-ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.hp-card:hover {
+  border-color: var(--gb-link);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+.hp-card-name { font-size: 16px; font-weight: 700; }
+.hp-card-en { font-size: 12.5px; color: var(--gb-muted); }
+.hp-card-go { margin-top: 8px; font-size: 12.5px; color: var(--gb-link); font-weight: 600; }
+.hp-zh-note {
+  margin-top: 36px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #155724;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+}
+@media (max-width: 640px) {
+  .hp { padding: 32px 16px 60px; }
+  .hp-hero h1 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<header class="ob-header">
+  <div class="ob-header-inner">
+    <a class="ob-brand" href="./index.html">
+      <span class="ob-brand-logo">n8n</span>
+      <span class="ob-brand-text"><strong>官方文档</strong><em>Docs · 1:1 还原</em></span>
+    </a>
+    <nav class="ob-section-nav" aria-label="板块">${sectionNav}</nav>
+    <div class="ob-header-right">
+      <button class="ob-search-btn" id="ob-search-toggle" type="button">搜索… <kbd>⌘K</kbd></button>
+      <a class="ob-switch" href="./../index.html">← 小白教程（新版）</a>
+    </div>
+  </div>
+</header>
+
+<main class="hp">
+  <div class="hp-hero">
+    <h1>n8n 官方文档</h1>
+    <p>docs.n8n.io 1:1 离线还原版 · 全站 ${pageCount} 页 · 核心章节中文本土化（🌐 标注页面可切换英文原文）</p>
+    <button class="hp-search" id="hp-search-open" type="button">🔍 搜索全部官方文档… <kbd>⌘K</kbd></button>
+  </div>
+  <div class="hp-grid">${cards}</div>
+  <div class="hp-zh-note">🌐 <strong>已本地化板块</strong>：入门（全部）、构建（理解工作流 / 数据处理 / 流程逻辑 / AI 集成）、部署（安装与配置）、连接（API）、管理（用户与权限 / 凭证）——其余页面保留官方英文原文。</div>
+</main>
+
+<div class="ob-modal" id="ob-modal" hidden>
+  <div class="ob-modal-box">
+    <input id="ob-modal-input" type="search" placeholder="搜索全部官方文档…" autocomplete="off">
+    <div id="ob-modal-results"></div>
+  </div>
+</div>
+
+<script>var SEARCH_INDEX = null;</script>
+<script src="./official-app.js"></script>
+</body>
+</html>`;
+}
 import { copyFile } from 'node:fs/promises';
 await build();

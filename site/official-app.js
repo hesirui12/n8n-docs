@@ -86,6 +86,8 @@
       modalResults.innerHTML = '';
     }
     toggleBtn.addEventListener('click', openModal);
+    var hpOpen = document.getElementById('hp-search-open');
+    if (hpOpen) hpOpen.addEventListener('click', openModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openModal(); }

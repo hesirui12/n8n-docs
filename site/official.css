@@ -461,6 +461,7 @@ kbd {
 .ob-footer p { margin: 0; }
 
 /* ⌘K 模态搜索 */
+.ob-modal[hidden] { display: none; }
 .ob-modal {
   position: fixed;
   inset: 0;
