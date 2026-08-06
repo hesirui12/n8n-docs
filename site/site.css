@@ -134,6 +134,15 @@ a:hover { text-decoration: underline; }
 }
 .header-links a:hover { color: var(--signal-deep); text-decoration: none; border-color: var(--rule-strong); }
 
+.header-links a.switch-official {
+  color: var(--signal-deep);
+  border: 1px solid var(--signal);
+  font-weight: 600;
+  padding: 6px 12px;
+  background: var(--surface);
+}
+.header-links a.switch-official:hover { background: var(--signal-soft); }
+
 .ver-chip {
   margin-left: 10px;
   font-family: var(--mono);

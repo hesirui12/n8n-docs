@@ -6,6 +6,8 @@
   "description": "轻量级 Bun 静态站点生成器 —— n8n 入门教程（ark-ui · endfield 风格手册）",
   "scripts": {
     "build": "bun run build.ts",
+    "build:official": "bun run build-official.ts",
+    "build:all": "bun run build.ts && bun run build-official.ts",
     "serve": "bun run serve.ts",
     "dev": "bun run build.ts && bun run serve.ts"
   },

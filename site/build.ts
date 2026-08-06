@@ -135,6 +135,7 @@ function layout(opts: {
     <nav class="header-links" aria-label="站外链接">
       <a href="https://docs.n8n.io/" target="_blank" rel="noopener">官方文档</a>
       <a href="https://github.com/n8n-io/n8n-docs" target="_blank" rel="noopener">官方手册仓库</a>
+      <a class="switch-official" href="official/">官方文档（旧版）</a>
       <span class="ver-chip">Ver ${opts.version}</span>
     </nav>
   </div>
